@@ -8,7 +8,7 @@
 
 | Status | Count |
 |--------|-------|
-| ✅ Completed | 8 |
+| ✅ Completed | 9 |
 | 🔄 In Progress | 0 |
 | ⏳ Pending | 0 |
 
@@ -18,7 +18,7 @@
 
 | # | Feature | Status | Commit | Details |
 |---|---------|--------|--------|---------|
-| F1 | Project Scaffolding & Infrastructure | ✅ Complete | ADO#1 | Spring Boot 3.2 + Maven, CORS, ApiResponse<T>, HealthController, Vite+React18, Tailwind, all npm packages, base routing |
+| F1 | Project Scaffolding & Infrastructure | ✅ Complete | ADO#1 | Spring Boot 3.3.4 + Maven, CORS, ApiResponse<T>, HealthController, Vite+React18, Tailwind, all npm packages, base routing |
 | F2 | Authentication (PIN + JWT) | ✅ Complete | ADO#2 | UserConfig entity, JwtUtil (15min access / 7d refresh), AuthService (bcrypt, token rotation), AuthController (5 endpoints), JwtAuthFilter, SecurityConfig, PinLogin UI, authStore, ProtectedRoute, axios 401 interceptor |
 | F3 | Subject CRUD | ✅ Complete | ADO#3 | Subject entity + CRUD, cascade NULL on delete, SubjectManager modal w/ color picker, SubjectChip badge |
 | F4 | Todo CRUD | ✅ Complete | ADO#4 | Todo entity (all SPEC fields), TodoRepository (JPQL filters), TodoService (completedAt on DONE), 7 REST endpoints, TodoDrawer slide-in w/ all fields + conflict warning, PriorityBadge |
@@ -26,11 +26,17 @@
 | F6 | Kanban Board | ✅ Complete | ADO#6 | 4-column desktop DnD, KanbanColumn + KanbanCard, drag→PATCH status optimistic, NEEDS_REVIEW→TODO opens drawer, mobile tab layout |
 | F7 | Midnight Auto-Archive | ✅ Complete | ADO#7 | ScheduledTasks @Scheduled(cron "0 1 0 * * *"), archiveOverdueTodos JPQL update, KanbanPage toast on NEEDS_REVIEW count |
 | F8 | Mobile Polish | ✅ Complete | ADO#8 | TouchSensor on all DnD, weekly mobile scroll-snap, loading spinners, empty states w/ icons, keyboard arrow nav |
+| F9 | Multi-User + Admin Approval | ✅ Complete | ADO#9 | User entity (ADMIN/USER role, PENDING/APPROVED/REJECTED status), first user auto-ADMIN, RegisterPage, AdminPage (approve/reject/delete), AdminRoute guard, userId-scoped todos+subjects, JWT carries userId+role |
 
 ---
 
 ## Verification Checklist
 
+- [ ] First run: register → auto-ADMIN → redirected to `/weekly`
+- [ ] Second user registers → sees pending-approval screen
+- [ ] Admin approves user → user can now log in
+- [ ] Admin rejects user → user login returns error
+- [ ] `/admin` page only accessible with ADMIN role
 - [ ] First run: setup PIN → redirected to `/weekly`
 - [ ] Create todo via quick-add in a day cell → appears on that day
 - [ ] Open card → drawer slides in → edit → changes persist on refresh

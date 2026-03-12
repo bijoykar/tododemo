@@ -1,0 +1,6 @@
+import api from './axiosInstance'
+
+export const getSubjects = () => api.get('/subjects').then(r => r.data.data)
+export const createSubject = (data) => api.post('/subjects', data).then(r => r.data.data)
+export const updateSubject = (id, data) => api.put(`/subjects/${id}`, data).then(r => r.data.data)
+export const deleteSubject = (id) => api.delete(`/subjects/${id}`).then(r => r.data.data)

@@ -13,7 +13,19 @@
       "Bash(mvn --version 2>&1 && ls /c/xampp/htdocs/todoplanner/backend/)",
       "Bash(git -C /c/xampp/htdocs/todoplanner show HEAD:backend/pom.xml 2>&1 | head -5)",
       "Bash(java -version 2>&1)",
-      "Bash(cd /c/xampp/htdocs/todoplanner/backend && mvn spring-boot:run 2>&1)"
+      "Bash(cd /c/xampp/htdocs/todoplanner/backend && mvn spring-boot:run 2>&1)",
+      "Bash(cd /c/xampp/htdocs/todoplanner/backend && curl -s http://localhost:8080/api/health 2>&1 | head -5)",
+      "Bash(taskkill /F /IM java.exe 2>&1; echo \"Java processes killed\")",
+      "Bash(taskkill //F //IM java.exe 2>&1; echo \"done\")",
+      "Bash(sleep 25 && curl -s http://localhost:8080/api/health 2>&1)",
+      "Bash(netstat -ano | grep \":8080\" 2>&1 || netstat -ano | findstr \":8080\" 2>&1)",
+      "Bash(tasklist //FI \"PID eq 39952\" 2>&1)",
+      "Bash(taskkill //F //PID 39952 2>&1)",
+      "Bash(curl -s -X POST http://localhost:8080/api/auth/register \\\\\n  -H \"Content-Type: application/json\" \\\\\n  -d '{\"username\":\"admin\",\"pin\":\"1234\"}' 2>&1)",
+      "Bash(curl -s -c /tmp/cookies.txt -X POST http://localhost:8080/api/auth/login \\\\\n  -H \"Content-Type: application/json\" \\\\\n  -d '{\"username\":\"admin\",\"pin\":\"1234\"}' 2>&1)",
+      "Bash(git rm:*)",
+      "Bash(git commit:*)",
+      "Bash(curl -s http://localhost:3000 2>&1 | head -5)"
     ]
   }
 }

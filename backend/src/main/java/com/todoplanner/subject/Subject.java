@@ -1,5 +1,6 @@
 package com.todoplanner.subject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.todoplanner.auth.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,6 +20,7 @@ public class Subject {
     @Column(length = 7)
     private String color;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

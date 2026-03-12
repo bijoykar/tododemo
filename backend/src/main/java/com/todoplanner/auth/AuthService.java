@@ -4,7 +4,11 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.HexFormat;
 import java.util.Map;
 
 @Service
@@ -17,6 +21,16 @@ public class AuthService {
     public AuthService(UserRepository userRepository, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.jwtUtil = jwtUtil;
+    }
+
+    private String sha256(String input) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
+            return HexFormat.of().formatHex(hash);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 not available", e);
+        }
     }
 
     public Map<String, Object> register(String username, String email, String pin) {
@@ -62,7 +76,7 @@ public class AuthService {
         }
 
         String refreshToken = jwtUtil.generateRefreshToken(user.getId());
-        user.setRefreshTokenHash(passwordEncoder.encode(refreshToken));
+        user.setRefreshTokenHash(sha256(refreshToken));
         userRepository.save(user);
 
         setRefreshCookie(response, refreshToken);
@@ -82,12 +96,12 @@ public class AuthService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         if (user.getRefreshTokenHash() == null ||
-                !passwordEncoder.matches(refreshToken, user.getRefreshTokenHash())) {
+                !sha256(refreshToken).equals(user.getRefreshTokenHash())) {
             throw new IllegalArgumentException("Invalid refresh token");
         }
 
         String newRefreshToken = jwtUtil.generateRefreshToken(user.getId());
-        user.setRefreshTokenHash(passwordEncoder.encode(newRefreshToken));
+        user.setRefreshTokenHash(sha256(newRefreshToken));
         userRepository.save(user);
 
         setRefreshCookie(response, newRefreshToken);

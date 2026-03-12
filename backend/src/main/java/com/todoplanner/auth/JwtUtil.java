@@ -1,7 +1,6 @@
 package com.todoplanner.auth;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -22,22 +21,23 @@ public class JwtUtil {
     private long refreshTokenExpiryMs;
 
     private SecretKey getSigningKey() {
-        byte[] keyBytes = secret.getBytes();
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-    public String generateAccessToken() {
+    public String generateAccessToken(Long userId, String username, String role) {
         return Jwts.builder()
-                .subject("user")
+                .subject(String.valueOf(userId))
+                .claim("username", username)
+                .claim("role", role)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + accessTokenExpiryMs))
                 .signWith(getSigningKey())
                 .compact();
     }
 
-    public String generateRefreshToken() {
+    public String generateRefreshToken(Long userId) {
         return Jwts.builder()
-                .subject("user")
+                .subject(String.valueOf(userId))
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + refreshTokenExpiryMs))
                 .signWith(getSigningKey())
@@ -59,5 +59,13 @@ public class JwtUtil {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
+    }
+
+    public Long getUserId(String token) {
+        return Long.parseLong(getClaims(token).getSubject());
+    }
+
+    public String getRole(String token) {
+        return getClaims(token).get("role", String.class);
     }
 }

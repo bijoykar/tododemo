@@ -66,4 +66,6 @@ Start MySQL via the XAMPP Control Panel. The schema is bootstrapped automaticall
 After each feature is completed , commit the changes with ADO#{feature No} pattern with good commit message
 ##Prompt
 Add all user provided promt is a file
+## completion satus
+Add completion status in a file with how many feature pending , how many complted with details status
 

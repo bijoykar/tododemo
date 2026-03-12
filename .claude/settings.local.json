@@ -1,7 +1,19 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git -C /c/xampp/htdocs/todoplanner log --oneline -20 2>&1)",
+      "Bash(git -C /c/xampp/htdocs/todoplanner show --stat 2>&1)",
+      "Bash(npm create:*)",
+      "Bash(cd /c/xampp/htdocs/todoplanner/frontend && npm install 2>&1)",
+      "Bash(npm install:*)",
+      "Bash(rm /c/xampp/htdocs/todoplanner/frontend/src/App.css 2>/dev/null; rm /c/xampp/htdocs/todoplanner/frontend/src/assets/react.svg 2>/dev/null; echo \"cleaned\"\nfind /c/xampp/htdocs/todoplanner/frontend/src -name \"*.jsx\" -o -name \"*.js\" -o -name \"*.css\" | sort)",
+      "Bash(cd /c/xampp/htdocs/todoplanner/backend && ./mvnw spring-boot:run 2>&1)",
+      "Bash(cd /c/xampp/htdocs/todoplanner/frontend && npm run dev 2>&1)",
+      "Bash(mvn --version 2>&1 && ls /c/xampp/htdocs/todoplanner/backend/)",
+      "Bash(git -C /c/xampp/htdocs/todoplanner show HEAD:backend/pom.xml 2>&1 | head -5)",
+      "Bash(java -version 2>&1)",
+      "Bash(cd /c/xampp/htdocs/todoplanner/backend && mvn spring-boot:run 2>&1)"
     ]
   }
 }
